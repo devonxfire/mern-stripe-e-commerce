@@ -8,20 +8,28 @@ export default function SingupPage() {
           <h1 className="text-white text-4xl hero-text text-center">
             Enter your deets to chow.
           </h1>
-          <form className=" flex flex-col gap-2 w-full max-w-lg pt-12 px-4 ">
+          <form className=" flex flex-col gap-2 w-full max-w-lg pt-12 px-4 text-slate-500">
             <input
               type="text"
               id="username"
               placeholder="Username"
-              className=""
+              className="rounded-lg "
             />
-            <input type="email" id="email" placeholder="Email" className="" />
+            <input
+              type="email"
+              id="email"
+              placeholder="Email"
+              className="rounded-lg"
+            />
             <input
               type="password"
               id="password"
               placeholder="Password"
-              className=""
+              className="rounded-lg"
             />
+            <button className="uppercase p-3 text-white bg-slate-950 rounded-lg hover:opacity-80 mt-6">
+              Sign up
+            </button>
           </form>
         </div>
       </div>
