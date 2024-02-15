@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Protest+Riot&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,700;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital@0;1&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+} */
+
+body {
+  font-family: "Archivo Narrow", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.hero-text,
+.header-font {
+  font-family: "Archivo Narrow", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.logo {
+  font-family: "Protest Riot", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.quote {
+  font-family: "Grandiflora One", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
