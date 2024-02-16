@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import burger from "../assets/burger.png";
+import { useSelector } from "react-redux";
 
 export default function Header() {
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <header className="pb-8">
       <div className="max-w-5xl  mx-auto py-6 flex items-end justify-between px-4 border-b">
@@ -26,23 +28,41 @@ export default function Header() {
           </div>
         </Link>
         <nav>
-          <ul className="flex gap-6 text-slate-800  ">
+          <ul className="flex gap-6 text-slate-600 items-center ">
             <Link to={"/"}>
-              <li>Home</li>
+              <li className="hover:text-red-600">Home</li>
             </Link>
             <Link to={"/menu"}>
-              <li>Menu</li>
+              <li className="hover:text-red-600">Menu</li>
             </Link>
             <Link to={"/about"}>
-              <li>About</li>
+              <li className="hover:text-red-600">About</li>
             </Link>
-            <Link to={"/signin"}>
-              <li>Sign in</li>
-            </Link>
-            <Link to={"/mycart"} className="flex gap-2 items-center">
+
+            {!currentUser && (
+              <Link to={"/signin"}>
+                <li className="hover:text-red-600">Sign in</li>
+              </Link>
+            )}
+
+            <Link
+              to={"/mycart"}
+              className="flex gap-2 items-center hover:text-red-600"
+            >
               <FaShoppingCart />
-              <li>My Cart</li>
+              <li className="">My Cart</li>
             </Link>
+
+            {currentUser && (
+              <Link to="/profile" className="flex items-center">
+                <li className="hover:text-red-600">My Profile</li>
+                <img
+                  src={currentUser.image}
+                  alt="user-image"
+                  className="w-12 h-12 rounded-full"
+                />
+              </Link>
+            )}
           </ul>
         </nav>
       </div>

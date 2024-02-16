@@ -59,10 +59,20 @@ export const signin = async (req, res, next) => {
   if (!isValidPassword) {
     return next(errorHandler(403, "Invalid password"));
   }
+  // Separate password from rest of user
+  const { password: pass, ...rest } = user._doc;
 
   // Create token and store in cookie
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-  res.cookie("access_token", token, { httpOnly: true });
+  res.cookie("access_token", token, { httpOnly: true }).status(200).json(rest);
+};
 
-  return res.status(200).json("User signed in successfully");
+// Signout
+export const signout = (req, res, next) => {
+  try {
+    res.clearCookie("access_token");
+    res.status(200).json("User signed out successfully");
+  } catch (error) {
+    next(error);
+  }
 };
