@@ -5,6 +5,7 @@ import menuRouter from "./routes/menu.route.js";
 import getUser from "./routes/user.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import stripe from "stripe";
 
 // Connect to DB
 connectDb();
@@ -16,6 +17,14 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+
+// Stripe
+const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
+
+const stripeItems = new Map([
+  [1, { name: "The Cheezanator", amount: 795 }],
+  [2, { name: "Southern Chicken Burger", amount: 685 }],
+]);
 
 // Routes
 app.use("/api/auth", authRouter);

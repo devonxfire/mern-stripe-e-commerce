@@ -28,8 +28,13 @@ export default function ProfilePage() {
   };
 
   return (
-    <div>
-      <button onClick={handleSignout}>Signout</button>
+    <div className="bg-gradient-to-r from-red-800 to-red-950 min-h-screen">
+      <button
+        onClick={handleSignout}
+        className="uppercase p-3 text-white bg-slate-950 rounded-lg hover:opacity-80 mt-6 w-[12rem] hover:text-red-500 transition duration-300 ease-in-out transform hover:scale-105"
+      >
+        Signout
+      </button>
     </div>
   );
 }

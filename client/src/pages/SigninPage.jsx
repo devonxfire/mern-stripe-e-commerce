@@ -60,14 +60,14 @@ export default function SinginPage() {
               type="email"
               id="email"
               placeholder="Email"
-              className="rounded-lg"
+              className="rounded-lg focus:outline-none focus:ring focus:ring-transparent focus:border-0"
               onChange={handleChange}
             />
             <input
               type="password"
               id="password"
               placeholder="Password"
-              className="rounded-lg"
+              className="rounded-lg focus:outline-none focus:ring focus:ring-transparent focus:border-0"
               onChange={handleChange}
             />
             <button className="uppercase p-3 text-white bg-slate-950 rounded-lg hover:opacity-80 mt-6 hover:text-red-500">

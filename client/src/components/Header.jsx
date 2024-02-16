@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import burger from "../assets/burger.png";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
+
+  const [dropDownMenu, setDropDownMenu] = useState(false);
   return (
     <header className="pb-8">
       <div className="max-w-5xl  mx-auto py-6 flex items-end justify-between px-4 border-b">
@@ -44,14 +47,15 @@ export default function Header() {
                 <li className="hover:text-red-600">Sign in</li>
               </Link>
             )}
-
-            <Link
-              to={"/mycart"}
-              className="flex gap-2 items-center hover:text-red-600"
-            >
-              <FaShoppingCart />
-              <li className="">My Cart</li>
-            </Link>
+            {currentUser && (
+              <Link
+                to={"/mycart"}
+                className="flex gap-2 items-center hover:text-red-600"
+              >
+                <FaShoppingCart />
+                <li className="">My Cart</li>
+              </Link>
+            )}
 
             {currentUser && (
               <Link to="/profile" className="flex items-center">
