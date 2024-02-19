@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SingupPage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  console.log(formData);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -13,7 +15,6 @@ export default function SingupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",
@@ -26,13 +27,29 @@ export default function SingupPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        return console.log(data.message);
+        showToastError(data.error);
       }
-      navigate("/signin");
-      console.log(data);
+
+      if (response.ok) {
+        navigate("/signin");
+        console.log(data);
+      }
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
+      showToastError(error.message);
     }
+  };
+
+  const showToastError = (error) => {
+    console.log("toasty error");
+    toast.error(error, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   return (
@@ -67,7 +84,10 @@ export default function SingupPage() {
               className="rounded-lg focus:outline-none focus:ring focus:ring-transparent focus:border-0"
               onChange={handleChange}
             />
-            <button className="uppercase p-3 text-white bg-slate-950 rounded-lg hover:opacity-80 mt-6 hover:text-red-500">
+            <button
+              className="uppercase p-3 text-white bg-slate-950 rounded-lg hover:opacity-80 mt-6 hover:text-red-500"
+              onClick={handleSubmit}
+            >
               Sign up
             </button>
           </form>
@@ -81,6 +101,7 @@ export default function SingupPage() {
           </Link>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

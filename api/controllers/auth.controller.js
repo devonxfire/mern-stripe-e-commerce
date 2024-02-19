@@ -47,24 +47,31 @@ export const signin = async (req, res, next) => {
   }
 
   // Check if user exists
-  const user = await User.findOne({ email });
+  try {
+    const user = await User.findOne({ email });
 
-  if (!user) {
-    return next(errorHandler(404, "User does not exist"));
+    if (!user) {
+      return next(errorHandler(404, "User does not exist"));
+    }
+
+    // Compare passwords
+    const isValidPassword = bcryptjs.compareSync(password, user.password);
+
+    if (!isValidPassword) {
+      return next(errorHandler(403, "Invalid credentials"));
+    }
+    // Separate password from rest of user
+    const { password: pass, ...rest } = user._doc;
+
+    // Create token and store in cookie
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
+  } catch (error) {
+    next(error);
   }
-
-  // Compare passwords
-  const isValidPassword = bcryptjs.compareSync(password, user.password);
-
-  if (!isValidPassword) {
-    return next(errorHandler(403, "Invalid password"));
-  }
-  // Separate password from rest of user
-  const { password: pass, ...rest } = user._doc;
-
-  // Create token and store in cookie
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-  res.cookie("access_token", token, { httpOnly: true }).status(200).json(rest);
 };
 
 // Signout

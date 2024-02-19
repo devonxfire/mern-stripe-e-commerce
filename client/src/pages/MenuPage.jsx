@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import MenuItemCard from "../components/MenuItemCard";
 import { useDispatch } from "react-redux";
 import { addToCartSuccess } from "../redux/cart/cartSlice";
+import { useSelector } from "react-redux";
 
 export default function MenuPage() {
   const dispatch = useDispatch();
   const [allMenuItems, setAllMenuItems] = useState([]);
   const [cart, setCart] = useState([]);
-  console.log(cart);
 
   const addToCart = (item) => {
     setCart([...cart, item]);
@@ -35,7 +35,7 @@ export default function MenuPage() {
       <div className="flex flex-col sm:flex-row gap-4 pt-8 max-w-5xl mx-auto">
         {allMenuItems
           ? allMenuItems.map((item) => (
-              <MenuItemCard key={item.id} item={item} addToCart={addToCart} />
+              <MenuItemCard key={item._id} item={item} addToCart={addToCart} />
             ))
           : null}
       </div>
@@ -43,7 +43,7 @@ export default function MenuPage() {
         <h2>Cart Items</h2>
         <ul>
           {cart.map((item) => (
-            <div key={item.id}>
+            <div key={item._id}>
               <li>{item.name}</li>
               <li>{item.price}</li>
             </div>

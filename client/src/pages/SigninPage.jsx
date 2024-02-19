@@ -7,6 +7,9 @@ import {
   signinSuccess,
   signinFailure,
 } from "../redux/user/userSlice";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SinginPage() {
   const navigate = useNavigate();
@@ -33,16 +36,29 @@ export default function SinginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        return console.log(data.message);
+        dispatch(signinFailure(data.error));
+        showToastError(data.error);
       }
-      dispatch(signinSuccess(data));
-      navigate("/profile");
 
-      console.log(data);
+      if (response.ok) {
+        dispatch(signinSuccess(data));
+        navigate("/profile");
+      }
     } catch (error) {
       dispatch(signinFailure(error.message));
-      console.log(error.message);
+      showToastError(error.message);
     }
+  };
+
+  const showToastError = (error) => {
+    toast.error(error, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   return (
@@ -83,6 +99,7 @@ export default function SinginPage() {
             </div>
           </Link>
         </div>
+        <ToastContainer />
       </div>
     </div>
   );

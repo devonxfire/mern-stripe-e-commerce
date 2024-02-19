@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { CartContext } from "../CartContext";
+import { useContext } from "react";
 
 export default function MenuItemCard({ item, addToCart }) {
-  const [cart, setCart] = useState([]);
-  console.log(cart);
+  const cart = useContext(CartContext);
+  const productQuantity = cart.getProductQuantity(item._id);
+  console.log(cart.items);
+
   return (
     <div className="flex justify-center  ">
       <div className="  bg-white rounded-lg px-4  flex flex-col gap-2 w-64 flex-1 pb-4">
@@ -25,7 +27,7 @@ export default function MenuItemCard({ item, addToCart }) {
 
         <button
           className="uppercase p-3 text-white bg-slate-950 rounded-lg hover:opacity-80  w-full hover:text-red-500 "
-          onClick={() => addToCart(item)}
+          onClick={() => cart.addOneToCart(item._id)}
         >
           add to cart
         </button>

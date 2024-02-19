@@ -18,6 +18,19 @@ export const getAllMenuItems = async (req, res, next) => {
   }
 };
 
+export const getOneMenuItem = async (req, res, next) => {
+  const { id } = req.params;
+  const menuItem = await MenuItem.findById(id);
+  try {
+    if (!menuItem) {
+      return next(errorHandler(404, "No menu item found"));
+    }
+    res.status(200).json(menuItem);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addMenuItem = async (req, res, next) => {
   const { name, description, price, onSpecial, imageUrl } = req.body;
   const newItem = await MenuItem.create(req.body);

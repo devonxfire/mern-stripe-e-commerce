@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currentCart: [],
+  cartQuantity: 0,
   error: null,
   loading: false,
 };
@@ -20,6 +21,8 @@ export const cartSlice = createSlice({
       state.currentCart = state.currentCart
         ? [...state.currentCart, action.payload]
         : [action.payload];
+
+      state.cartQuantity = state.currentCart.length;
     },
     addToCartFailure: (state, action) => {
       state.loading = false;
